@@ -1,0 +1,39 @@
+pragma solidity >=0.4.0<=0.6.0;
+
+contract Student{
+    address public owner;
+    mapping(address=>Student)Students;
+
+    constructor() public{
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner{
+        require(msg.sender==owner);
+        _;
+    }
+
+    struct Student{
+        address Studentid;
+        string name;
+        string course;
+        uint256 mark1;
+        uint256 mark2;
+        uint256 mark3;
+        uint256 totalMarks;
+        uint256 percentage;
+        bool isExist;
+    }
+    function register(address Studentid, string memory name, string memory course,uint256 mark1, uint256 mark2, uint256 mark3) public onlyOwner{
+        require(Students[Studentid].isExist==false,"ha..ha..Fraud Not Possible.");
+        uint256 totalMarks;
+        uint256 percentage;
+        totalMarks = (mark1+mark2+mark3);
+        percentage=(totalMarks/3);
+        Students[Studentid] = Student(Studentid,name, course,mark1,mark2,mark3,totalMarks,percentage,true);
+    }
+    function getStudentDetails(address Studentid) public view returns(address, string memory, string memory, uint256, uint256){
+
+    return(Students[Studentid].Studentid,Students[Studentid].name,Students[Studentid].course,Students[Studentid].totalMarks,Students[Studentid].percentage);
+}
+}
