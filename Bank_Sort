@@ -1,0 +1,35 @@
+pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: GPL-3.0
+
+contract Bank
+{
+//state varibles 
+address public owner;
+mapping(address=>uint) user;
+
+
+constructor()
+{
+    owner=msg.sender;
+}
+ function deposit() public payable
+{
+    require(msg.value>100 wei,"You cannot add eth less than 1");
+    user[msg.sender]=msg.value;
+
+}
+
+function getBalance() public view returns(uint)
+{
+
+ return user[msg.sender];
+}
+function withdraw(uint amount) public payable
+{
+    require(amount < user[msg.sender] ,"Insuficient Balance");
+    user[msg.sender]-=amount;
+    payable(msg.sender).transfer(amount);
+        // payable(msg.sender).transfer(amount);
+
+}
+}
