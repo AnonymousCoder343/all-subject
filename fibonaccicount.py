@@ -1,5 +1,4 @@
 no=int(input("ENTER YOUR NUMBER"))
-no=6
 a=0
 b=1
 c=0
